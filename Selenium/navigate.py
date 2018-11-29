@@ -1,20 +1,31 @@
-
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-import os
+from selenium.webdriver.common.by import By
+options = webdriver.ChromeOptions()
 
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--window-size=1920x1080")
+options.add_argument('headless')
+driver = webdriver.Chrome(chrome_options=options)
 
-# download the chrome driver from https://sites.google.com/a/chromium.org/chromedriver/downloads and put it in the
-# current directory
-chrome_driver = os.getcwd() +"\\chromedriver.exe"
+driver.get('https://bookings.ok.ubc.ca/library/admin.php')
 
-driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=chrome_driver)
-driver.get("https://www.google.com")
-lucky_button = driver.find_element_by_css_selector("[name=btnI]")
-lucky_button.click()
+username = driver.find_element_by_id("username")
+password = driver.find_element_by_id("password")
 
-# capture the screen
-driver.get_screenshot_as_file("capture.png")
+
+username.send_keys("18776154")
+password.send_keys("082897")
+
+driver.find_element_by_css_selector("#logon input[type='submit'").click()
+
+
+driver.get('https://bookings.ok.ubc.ca/library/edit_entry.php?area=1&room=5&hour=11&minute=0&year=2018&month=12&day=17')
+
+driver.find_element_by_id("name").send_keys("yeet yeet skeet skeet")
+
+driver.find_element_by_xpath("//select[@id='start_seconds']/option[@value='39600']").click()
+
+driver.find_element_by_xpath("//select[@id='end_seconds']/option[@value='46800']").click()
+
+driver.find_element_by_id("f_phone").send_keys("2503076081")
+driver.find_element_by_id("f_email").send_keys("cameronleechong@gmail.com")
+
+driver.find_element_by_css_selector("#main input[name='save_button'").click()
